@@ -5,8 +5,8 @@ allowlisting deals, and no paid tier.
 
 OpenAdBlock covers the feature set people actually use in Adblock Plus and AdBlock —
 filter-list blocking, element hiding, per-site allowlisting, pausing, custom filters, an
-element picker, counters and an activity log — in about 3,500 lines of dependency-free
-JavaScript that one person can read in an afternoon.
+element picker, counters and an activity log — in roughly 5,000 lines of commented,
+dependency-free JavaScript that one person can read through in an evening.
 
 > **Status: 0.1.0, early but working.** The engine, UI and packaging are complete and
 > tested. It has not yet been through an addons.mozilla.org review. See
