@@ -69,6 +69,11 @@ Not requested: `history`, `bookmarks`, `cookies`, `downloads`, `nativeMessaging`
 `management`, `clipboardRead`. [A unit test asserts those are
 absent](../test/manifest.test.js) so it cannot regress unnoticed.
 
+The manifest also declares Firefox's data collection consent key as
+`data_collection_permissions: { required: ["none"] }`, which is what the browser shows on
+the install prompt and the add-on listing. A test pins that to `none` as well, so the
+declaration and this document cannot drift apart.
+
 ## Third parties
 
 The filter lists are maintained by other people and downloaded from their servers. Their

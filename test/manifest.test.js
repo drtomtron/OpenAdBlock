@@ -41,6 +41,15 @@ describe('manifest', () => {
     assert.match(manifest.browser_specific_settings.gecko.strict_min_version, /^\d+\.\d+$/);
   });
 
+  it('declares that it collects no data', () => {
+    // Firefox shows this on the install prompt and the add-on listing. It must
+    // stay 'none': see docs/PRIVACY.md.
+    assert.deepEqual(
+      manifest.browser_specific_settings.gecko.data_collection_permissions,
+      { required: ['none'] }
+    );
+  });
+
   it('asks for the permissions the blocker needs and nothing exotic', () => {
     const permissions = new Set(manifest.permissions);
     for (const needed of ['<all_urls>', 'webRequest', 'webRequestBlocking', 'storage', 'tabs']) {

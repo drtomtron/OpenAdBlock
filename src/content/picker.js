@@ -28,40 +28,73 @@
   let root = null;
   let highlight = null;
   let label = null;
+  let blockButton = null;
   let filterText = '';
 
   build();
   window.__openAdBlockPicker = { focus: () => root && root.focus(), stop };
 
+  /**
+   * Create an element. Nothing here is built from a string, so the picker
+   * cannot be a markup injection route.
+   * @param {string} tag
+   * @param {Record<string, string>} [attributes]
+   * @param {string} [text]
+   * @returns {HTMLElement}
+   */
+  function make(tag, attributes, text) {
+    const node = document.createElement(tag);
+    for (const [name, value] of Object.entries(attributes || {})) {
+      node.setAttribute(name, value);
+    }
+    if (text !== undefined) node.textContent = text;
+    return node;
+  }
+
+  /**
+   * @param {string} id
+   * @param {string} text
+   * @param {() => void} onClick
+   * @returns {HTMLButtonElement}
+   */
+  function makeButton(id, text, onClick) {
+    const button = make('button', { type: 'button', id }, text);
+    button.addEventListener('click', onClick);
+    return button;
+  }
+
   /** Create the picker chrome. */
   function build() {
-    root = document.createElement('div');
-    root.id = ROOT_ID;
-    root.setAttribute('tabindex', '-1');
-    root.innerHTML = [
-      '<div id="openadblock-picker-highlight"></div>',
-      '<div id="openadblock-picker-panel" role="dialog" aria-label="OpenAdBlock element picker">',
-      '  <div id="openadblock-picker-title">Pick an element to block</div>',
-      '  <code id="openadblock-picker-filter">Hover over the page</code>',
-      '  <div id="openadblock-picker-hint">Click an element. Use the buttons or the up',
-      '  and down arrow keys to widen the selection. Escape cancels.</div>',
-      '  <div id="openadblock-picker-actions">',
-      '    <button type="button" id="openadblock-picker-wider">Wider</button>',
-      '    <button type="button" id="openadblock-picker-narrower">Narrower</button>',
-      '    <button type="button" id="openadblock-picker-block" disabled>Block it</button>',
-      '    <button type="button" id="openadblock-picker-cancel">Cancel</button>',
-      '  </div>',
-      '</div>'
-    ].join('');
+    root = make('div', { id: ROOT_ID, tabindex: '-1' });
+    highlight = make('div', { id: 'openadblock-picker-highlight' });
+    label = make('code', { id: 'openadblock-picker-filter' }, 'Hover over the page');
+    blockButton = makeButton('openadblock-picker-block', 'Block it', commit);
+    blockButton.disabled = true;
+
+    const actions = make('div', { id: 'openadblock-picker-actions' });
+    actions.append(
+      makeButton('openadblock-picker-wider', 'Wider', () => adjust(1)),
+      makeButton('openadblock-picker-narrower', 'Narrower', () => adjust(-1)),
+      blockButton,
+      makeButton('openadblock-picker-cancel', 'Cancel', stop)
+    );
+
+    const panel = make('div', {
+      id: 'openadblock-picker-panel',
+      role: 'dialog',
+      'aria-label': 'OpenAdBlock element picker'
+    });
+    panel.append(
+      make('div', { id: 'openadblock-picker-title' }, 'Pick an element to block'),
+      label,
+      make('div', { id: 'openadblock-picker-hint' },
+        'Click an element. Use the buttons or the up and down arrow keys to widen ' +
+        'the selection. Escape cancels.'),
+      actions
+    );
+
+    root.append(highlight, panel);
     document.documentElement.appendChild(root);
-
-    highlight = root.querySelector('#openadblock-picker-highlight');
-    label = root.querySelector('#openadblock-picker-filter');
-
-    root.querySelector('#openadblock-picker-wider').addEventListener('click', () => adjust(1));
-    root.querySelector('#openadblock-picker-narrower').addEventListener('click', () => adjust(-1));
-    root.querySelector('#openadblock-picker-block').addEventListener('click', commit);
-    root.querySelector('#openadblock-picker-cancel').addEventListener('click', stop);
 
     document.addEventListener('mousemove', onMouseMove, true);
     document.addEventListener('click', onClick, true);
@@ -143,7 +176,7 @@
 
     filterText = buildFilter(element);
     label.textContent = filterText;
-    root.querySelector('#openadblock-picker-block').disabled = false;
+    blockButton.disabled = false;
     reposition();
   }
 

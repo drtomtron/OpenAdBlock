@@ -116,8 +116,9 @@ function checkJavaScript(name, path, text) {
       if (/\bconsole\.log\s*\(/.test(line)) {
         report(name, index + 1, 'console.log in shipped code');
       }
-      if (/\.innerHTML\s*=/.test(line) && !/innerHTML = \[/.test(line)) {
-        report(name, index + 1, 'innerHTML assignment: build nodes instead so list data cannot inject markup');
+      if (/\.(?:innerHTML|outerHTML)\s*=/.test(line) || /insertAdjacentHTML/.test(line)) {
+        report(name, index + 1,
+          'assigning markup: build nodes instead, so list data cannot inject into a page');
       }
       if (/\beval\s*\(|new Function\s*\(/.test(line)) {
         report(name, index + 1, 'eval or new Function is not allowed in an extension');
