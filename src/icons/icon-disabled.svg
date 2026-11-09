@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="OpenAdBlock (paused)">
+  <path d="M32 3 7 11v19c0 14.1 10.1 26.3 25 31 14.9-4.7 25-16.9 25-31V11L32 3z" fill="#8b95a5"/>
+  <path d="M32 3 7 11v19c0 14.1 10.1 26.3 25 31 14.9-4.7 25-16.9 25-31V11L32 3z" fill="none" stroke="#5a6372" stroke-width="2"/>
+  <rect x="23" y="20" width="6" height="22" rx="2" fill="#fff"/>
+  <rect x="35" y="20" width="6" height="22" rx="2" fill="#fff"/>
+</svg>

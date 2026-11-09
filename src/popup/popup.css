@@ -1,0 +1,133 @@
+/*
+ * OpenAdBlock - popup styles
+ * Copyright (C) 2026 OpenAdBlock contributors
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
+body {
+  width: 320px;
+  padding: 0 0 12px;
+}
+
+.pop-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--oab-border);
+}
+
+.pop-header h1 {
+  flex: 1;
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.pop-logo {
+  display: block;
+}
+
+.pop-icon-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--oab-text-muted);
+}
+
+.pop-icon-button:hover {
+  background: var(--oab-bg-subtle);
+  color: var(--oab-accent);
+}
+
+.pop-banner {
+  margin: 10px 14px 0;
+  padding: 8px 10px;
+  border-radius: var(--oab-radius-sm);
+  font-size: 12.5px;
+  background: var(--oab-warn-soft);
+  color: var(--oab-warn);
+}
+
+.pop-banner[data-tone="bad"] {
+  background: var(--oab-bad-soft);
+  color: var(--oab-bad);
+}
+
+.pop-site {
+  padding: 14px;
+}
+
+.pop-site-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid var(--oab-border);
+  border-radius: var(--oab-radius);
+  background: var(--oab-bg-subtle);
+}
+
+.pop-site-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.pop-host {
+  font-weight: 600;
+  overflow-wrap: anywhere;
+}
+
+.pop-site-state {
+  font-size: 12.5px;
+}
+
+.pop-counts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 0 14px;
+}
+
+.pop-count {
+  padding: 10px 12px;
+  border: 1px solid var(--oab-border);
+  border-radius: var(--oab-radius);
+  text-align: center;
+}
+
+.pop-count-value {
+  display: block;
+  font-size: 20px;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+}
+
+.pop-count-label {
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.pop-actions {
+  display: grid;
+  gap: 8px;
+  padding: 14px 14px 0;
+}
+
+.pop-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: 14px;
+  padding: 10px 14px 0;
+  border-top: 1px solid var(--oab-border);
+  font-size: 12px;
+}

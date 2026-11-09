@@ -1,0 +1,114 @@
+/*
+ * OpenAdBlock - element picker styles
+ * Copyright (C) 2026 OpenAdBlock contributors
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *
+ * Everything is scoped under #openadblock-picker-root and marked !important so
+ * that page stylesheets cannot reshape the picker.
+ */
+
+#openadblock-picker-root {
+  all: initial !important;
+  position: fixed !important;
+  inset: 0 !important;
+  z-index: 2147483647 !important;
+  pointer-events: none !important;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif !important;
+}
+
+#openadblock-picker-highlight {
+  display: none;
+  position: fixed !important;
+  box-sizing: border-box !important;
+  border: 2px solid #3b82f6 !important;
+  background: rgba(59, 130, 246, 0.18) !important;
+  box-shadow: 0 0 0 9999px rgba(15, 23, 42, 0.25) !important;
+  pointer-events: none !important;
+  transition: none !important;
+}
+
+#openadblock-picker-panel {
+  position: fixed !important;
+  bottom: 16px !important;
+  left: 50% !important;
+  transform: translateX(-50%) !important;
+  width: min(560px, calc(100vw - 32px)) !important;
+  box-sizing: border-box !important;
+  padding: 14px 16px !important;
+  border-radius: 12px !important;
+  background: #0f172a !important;
+  color: #f8fafc !important;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.45) !important;
+  pointer-events: auto !important;
+  font-size: 13px !important;
+  line-height: 1.45 !important;
+}
+
+#openadblock-picker-title {
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  margin: 0 0 8px !important;
+  color: #f8fafc !important;
+}
+
+#openadblock-picker-filter {
+  display: block !important;
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace !important;
+  font-size: 12px !important;
+  word-break: break-all !important;
+  background: #1e293b !important;
+  color: #bfdbfe !important;
+  border-radius: 8px !important;
+  padding: 8px 10px !important;
+  margin: 0 0 8px !important;
+}
+
+#openadblock-picker-hint {
+  color: #cbd5e1 !important;
+  font-size: 12px !important;
+  margin: 0 0 12px !important;
+}
+
+#openadblock-picker-actions {
+  display: flex !important;
+  gap: 8px !important;
+  flex-wrap: wrap !important;
+}
+
+#openadblock-picker-actions button {
+  all: unset !important;
+  box-sizing: border-box !important;
+  cursor: pointer !important;
+  font: inherit !important;
+  font-size: 13px !important;
+  padding: 7px 14px !important;
+  border-radius: 8px !important;
+  background: #1e293b !important;
+  color: #e2e8f0 !important;
+  border: 1px solid #334155 !important;
+}
+
+#openadblock-picker-actions button:hover {
+  background: #273449 !important;
+}
+
+#openadblock-picker-actions button:focus-visible {
+  outline: 2px solid #60a5fa !important;
+  outline-offset: 2px !important;
+}
+
+#openadblock-picker-block {
+  background: #2563eb !important;
+  border-color: #2563eb !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+#openadblock-picker-block:hover {
+  background: #1d4ed8 !important;
+}
+
+#openadblock-picker-block:disabled {
+  opacity: 0.5 !important;
+  cursor: default !important;
+}

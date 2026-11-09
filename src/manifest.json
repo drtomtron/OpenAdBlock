@@ -1,0 +1,66 @@
+{
+  "manifest_version": 2,
+  "name": "__MSG_extensionName__",
+  "short_name": "OpenAdBlock",
+  "version": "0.1.0",
+  "description": "__MSG_extensionDescription__",
+  "default_locale": "en",
+  "author": "OpenAdBlock contributors",
+  "homepage_url": "https://github.com/drtomtron/OpenAdBlock",
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "openadblock@openadblock.github.io",
+      "strict_min_version": "115.0"
+    }
+  },
+
+  "icons": {
+    "48": "icons/icon.svg",
+    "96": "icons/icon.svg",
+    "128": "icons/icon.svg"
+  },
+
+  "permissions": [
+    "<all_urls>",
+    "webRequest",
+    "webRequestBlocking",
+    "webNavigation",
+    "storage",
+    "unlimitedStorage",
+    "tabs",
+    "alarms",
+    "contextMenus"
+  ],
+
+  "background": {
+    "page": "background/background.html",
+    "persistent": true
+  },
+
+  "browser_action": {
+    "default_title": "OpenAdBlock",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "19": "icons/icon.svg",
+      "38": "icons/icon.svg"
+    }
+  },
+
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content/cosmetic.js"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    }
+  ],
+
+  "web_accessible_resources": []
+}

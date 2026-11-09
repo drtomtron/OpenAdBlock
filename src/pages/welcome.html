@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OpenAdBlock is ready</title>
+    <link rel="stylesheet" href="../ui/common.css" />
+    <style>
+      .welcome {
+        max-width: 640px;
+        margin: 0 auto;
+        padding: 48px 20px 64px;
+      }
+
+      .welcome-head {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 8px;
+      }
+
+      .welcome h1 {
+        margin: 0;
+        font-size: 24px;
+        font-weight: 650;
+      }
+
+      .welcome h2 {
+        font-size: 15px;
+        margin: 28px 0 8px;
+      }
+
+      .welcome ul {
+        padding-left: 20px;
+      }
+
+      .welcome li {
+        margin-bottom: 6px;
+      }
+
+      .welcome-card {
+        border: 1px solid var(--oab-border);
+        border-radius: var(--oab-radius);
+        background: var(--oab-bg-raised);
+        padding: 18px;
+        margin-top: 24px;
+        box-shadow: var(--oab-shadow);
+      }
+
+      .welcome-actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-top: 24px;
+      }
+
+      .welcome-actions a {
+        text-decoration: none;
+        padding: 9px 16px;
+        border-radius: var(--oab-radius-sm);
+        border: 1px solid var(--oab-border-strong);
+        color: var(--oab-text);
+      }
+
+      .welcome-actions a.primary {
+        background: var(--oab-accent);
+        border-color: var(--oab-accent);
+        color: var(--oab-on-accent);
+        font-weight: 600;
+      }
+    </style>
+  </head>
+  <body>
+    <main class="welcome">
+      <div class="welcome-head">
+        <img src="../icons/icon.svg" alt="" width="40" height="40" />
+        <h1>OpenAdBlock is ready</h1>
+      </div>
+      <p class="oab-muted">
+        Ads, pop-ups and trackers are being blocked on every site. There is nothing to sign
+        up for and nothing to configure first.
+      </p>
+
+      <div class="welcome-card">
+        <h2 style="margin-top: 0">What is on by default</h2>
+        <ul>
+          <li><strong>EasyList</strong> for advertising.</li>
+          <li><strong>EasyPrivacy</strong> for trackers and analytics beacons.</li>
+          <li><strong>ABP anti-circumvention</strong> for sites that try to defeat blockers.</li>
+          <li>A regional supplement, if one matches your browser language.</li>
+        </ul>
+        <p class="oab-muted">
+          Acceptable Ads is <strong>off</strong>. OpenAdBlock has no allowlisting deals with
+          anyone, so nothing is let through unless you ask for it.
+        </p>
+      </div>
+
+      <div class="welcome-card">
+        <h2 style="margin-top: 0">Worth knowing</h2>
+        <ul>
+          <li>Click the toolbar button to switch blocking off for one site, or to pause everywhere.</li>
+          <li>Use <strong>Block an element</strong> in the popup to hide something a list missed.</li>
+          <li>Cookie notices, social buttons and other annoyance lists are available in settings.</li>
+          <li>Nothing about your browsing leaves your computer. There is no account and no telemetry.</li>
+        </ul>
+      </div>
+
+      <div class="welcome-actions">
+        <a class="primary" href="../options/options.html">Open settings</a>
+        <a href="../options/options.html#lists">Choose filter lists</a>
+        <a href="https://github.com/drtomtron/OpenAdBlock" target="_blank" rel="noreferrer">Source code</a>
+      </div>
+    </main>
+  </body>
+</html>

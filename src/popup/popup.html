@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>OpenAdBlock</title>
+    <link rel="stylesheet" href="../ui/common.css" />
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <header class="pop-header">
+      <img class="pop-logo" src="../icons/icon.svg" alt="" width="24" height="24" />
+      <h1>OpenAdBlock</h1>
+      <button type="button" id="open-options" class="pop-icon-button" title="Settings" aria-label="Settings">
+        <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M12 15.5A3.5 3.5 0 1 1 15.5 12 3.5 3.5 0 0 1 12 15.5Zm7.4-2.1a7.6 7.6 0 0 0 0-2.8l2-1.6-2-3.4-2.4 1a7.5 7.5 0 0 0-2.4-1.4L14.2 2h-4l-.4 2.6a7.5 7.5 0 0 0-2.4 1.4l-2.4-1-2 3.4 2 1.6a7.6 7.6 0 0 0 0 2.8l-2 1.6 2 3.4 2.4-1a7.5 7.5 0 0 0 2.4 1.4l.4 2.6h4l.4-2.6a7.5 7.5 0 0 0 2.4-1.4l2.4 1 2-3.4Z" />
+        </svg>
+      </button>
+    </header>
+
+    <div id="status-banner" class="pop-banner" hidden></div>
+
+    <section class="pop-site" aria-labelledby="site-heading">
+      <h2 id="site-heading" class="oab-visually-hidden">This site</h2>
+      <div class="pop-site-row">
+        <div class="pop-site-text">
+          <div class="pop-host" id="site-host">loading…</div>
+          <div class="pop-site-state oab-muted" id="site-state"></div>
+        </div>
+        <label class="oab-switch" id="site-switch-label">
+          <input type="checkbox" id="site-switch" />
+          <span class="oab-track" aria-hidden="true"></span>
+          <span class="oab-visually-hidden">Block ads on this site</span>
+        </label>
+      </div>
+    </section>
+
+    <section class="pop-counts" aria-label="Blocked counts">
+      <div class="pop-count">
+        <span class="pop-count-value" id="count-page">0</span>
+        <span class="pop-count-label oab-muted">on this page</span>
+      </div>
+      <div class="pop-count">
+        <span class="pop-count-value" id="count-total">0</span>
+        <span class="pop-count-label oab-muted">since install</span>
+      </div>
+    </section>
+
+    <section class="pop-actions">
+      <button type="button" id="pick-element">Block an element…</button>
+      <button type="button" id="toggle-pause">Pause everywhere</button>
+      <button type="button" id="reload-page" class="oab-primary" hidden>Reload page</button>
+    </section>
+
+    <footer class="pop-footer oab-muted">
+      <span id="filter-count"></span>
+      <a href="#" id="open-log">Activity log</a>
+    </footer>
+
+    <script src="popup.js" type="module"></script>
+  </body>
+</html>

@@ -1,0 +1,16 @@
+blank_issues_enabled: true
+contact_links:
+  - name: An ad got through, or a site is broken
+    url: https://github.com/easylist/easylist/issues
+    about: >
+      Report it to EasyList. Filter fixes land for every blocker at once, and OpenAdBlock
+      picks them up on the next list update.
+  - name: A site defeats the blocker on purpose
+    url: https://github.com/abp-filters/abp-filters-anti-cv/issues
+    about: Report anti-adblock walls and circumvention to the anti-circumvention list.
+  - name: Security vulnerability
+    url: https://github.com/drtomtron/OpenAdBlock/security/advisories/new
+    about: Report privately, not as a public issue.
+  - name: How filters work
+    url: https://github.com/drtomtron/OpenAdBlock/blob/main/docs/FILTER_SYNTAX.md
+    about: What syntax OpenAdBlock supports, and what it does not support yet.

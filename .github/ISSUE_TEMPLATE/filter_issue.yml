@@ -1,0 +1,73 @@
+name: A filter is not being applied
+description: A filter exists in an enabled list, but OpenAdBlock does not act on it
+labels: ['engine', 'filters']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        This form is for when the **filter exists and the engine ignores it** — usually a gap
+        in the parser or the matcher.
+
+        If no filter covers the ad yet, report it to the filter list instead:
+        [EasyList](https://github.com/easylist/easylist/issues) or
+        [ABP anti-circumvention](https://github.com/abp-filters/abp-filters-anti-cv/issues).
+
+  - type: input
+    id: filter
+    attributes:
+      label: The filter
+      description: Copy it exactly, including any options after the $.
+      placeholder: '||ads.example.com^$script,third-party'
+    validations:
+      required: true
+
+  - type: input
+    id: list
+    attributes:
+      label: Which list it comes from
+      placeholder: 'EasyList, or a URL you added'
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: The request URL that should have been affected
+      placeholder: 'https://ads.example.com/tag.js'
+    validations:
+      required: true
+
+  - type: input
+    id: page
+    attributes:
+      label: The page it was requested from
+      placeholder: 'https://news.example.com/article'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: expected
+    attributes:
+      label: What should have happened
+      options:
+        - The request should have been blocked
+        - The request should have been allowed
+        - An element should have been hidden
+        - An element should not have been hidden
+    validations:
+      required: true
+
+  - type: textarea
+    id: log
+    attributes:
+      label: What the activity log shows for that request
+      render: text
+
+  - type: markdown
+    attributes:
+      value: |
+        **Note:** some filter options are not implemented yet and are counted as unsupported
+        rather than applied — `$redirect`, `$removeparam`, `$csp`, scriptlets (`##+js(...)`)
+        and others listed in
+        [docs/FILTER_SYNTAX.md](https://github.com/drtomtron/OpenAdBlock/blob/main/docs/FILTER_SYNTAX.md).
+        Those are tracked on the roadmap; no need to file them separately.

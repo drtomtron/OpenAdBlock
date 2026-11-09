@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>OpenAdBlock settings</title>
+    <link rel="stylesheet" href="../ui/common.css" />
+    <link rel="stylesheet" href="options.css" />
+  </head>
+  <body>
+    <header class="opt-header">
+      <div class="opt-header-inner">
+        <img src="../icons/icon.svg" alt="" width="32" height="32" />
+        <div>
+          <h1>OpenAdBlock</h1>
+          <p class="oab-muted" id="header-subtitle">Free and open-source blocking for Firefox</p>
+        </div>
+      </div>
+    </header>
+
+    <div class="opt-layout">
+      <nav class="opt-nav" aria-label="Settings sections">
+        <div role="tablist" aria-orientation="vertical">
+          <button role="tab" type="button" class="opt-tab" data-section="general" aria-selected="true">General</button>
+          <button role="tab" type="button" class="opt-tab" data-section="lists" aria-selected="false">Filter lists</button>
+          <button role="tab" type="button" class="opt-tab" data-section="allowlist" aria-selected="false">Allowlist</button>
+          <button role="tab" type="button" class="opt-tab" data-section="filters" aria-selected="false">My filters</button>
+          <button role="tab" type="button" class="opt-tab" data-section="log" aria-selected="false">Activity log</button>
+          <button role="tab" type="button" class="opt-tab" data-section="backup" aria-selected="false">Backup</button>
+          <button role="tab" type="button" class="opt-tab" data-section="about" aria-selected="false">About</button>
+        </div>
+      </nav>
+
+      <main class="opt-main">
+        <div id="toast" class="opt-toast" role="status" aria-live="polite" hidden></div>
+
+        <!-- General ----------------------------------------------------- -->
+        <section id="section-general" class="opt-section" role="tabpanel" aria-label="General">
+          <div class="opt-card">
+            <h2>Blocking</h2>
+            <label class="opt-row oab-switch">
+              <input type="checkbox" data-setting="enabled" />
+              <span class="oab-track" aria-hidden="true"></span>
+              <span class="opt-row-text">
+                <strong>Block ads and trackers</strong>
+                <span class="oab-muted">The master switch. Turning this off stops all blocking.</span>
+              </span>
+            </label>
+            <label class="opt-row oab-switch">
+              <input type="checkbox" data-setting="hideCosmetic" />
+              <span class="oab-track" aria-hidden="true"></span>
+              <span class="opt-row-text">
+                <strong>Hide ad containers</strong>
+                <span class="oab-muted">Apply element hiding rules so empty ad slots and sponsored blocks disappear.</span>
+              </span>
+            </label>
+            <label class="opt-row oab-switch">
+              <input type="checkbox" data-setting="collapsePlaceholders" />
+              <span class="oab-track" aria-hidden="true"></span>
+              <span class="opt-row-text">
+                <strong>Collapse blocked placeholders</strong>
+                <span class="oab-muted">Remove the gap left behind by a blocked image or frame.</span>
+              </span>
+            </label>
+            <label class="opt-row oab-switch">
+              <input type="checkbox" data-setting="acceptableAds" />
+              <span class="oab-track" aria-hidden="true"></span>
+              <span class="opt-row-text">
+                <strong>Allow Acceptable Ads</strong>
+                <span class="oab-muted">Subscribe to the Acceptable Ads exception list. Off by default, unlike Adblock Plus.</span>
+              </span>
+            </label>
+          </div>
+
+          <div class="opt-card">
+            <h2>Appearance</h2>
+            <label class="opt-row oab-switch">
+              <input type="checkbox" data-setting="showBadge" />
+              <span class="oab-track" aria-hidden="true"></span>
+              <span class="opt-row-text">
+                <strong>Show the blocked count on the toolbar button</strong>
+              </span>
+            </label>
+            <div class="opt-row">
+              <label class="opt-row-text" for="badge-scope">
+                <strong>Badge shows</strong>
+                <span class="oab-muted">What the number on the toolbar button counts.</span>
+              </label>
+              <select id="badge-scope" data-setting="badgeScope" class="opt-select">
+                <option value="tab">Blocked on the current page</option>
+                <option value="total">Blocked since install</option>
+              </select>
+            </div>
+            <div class="opt-row">
+              <label class="opt-row-text" for="theme">
+                <strong>Theme</strong>
+                <span class="oab-muted">Applies to this page and the popup.</span>
+              </label>
+              <select id="theme" data-setting="theme" class="opt-select">
+                <option value="system">Follow the system</option>
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="opt-card">
+            <h2>Filter list updates</h2>
+            <div class="opt-row">
+              <label class="opt-row-text" for="update-interval">
+                <strong>Check for updates every</strong>
+                <span class="oab-muted">A list is only re-downloaded when its own expiry has passed as well.</span>
+              </label>
+              <select id="update-interval" data-setting="updateIntervalHours" class="opt-select">
+                <option value="6">6 hours</option>
+                <option value="12">12 hours</option>
+                <option value="24">1 day</option>
+                <option value="72">3 days</option>
+                <option value="168">7 days</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="opt-card">
+            <h2>Activity log</h2>
+            <label class="opt-row oab-switch">
+              <input type="checkbox" data-setting="logEnabled" />
+              <span class="oab-track" aria-hidden="true"></span>
+              <span class="opt-row-text">
+                <strong>Keep a log of recent decisions</strong>
+                <span class="oab-muted">Held in memory only, never written to disk or sent anywhere.</span>
+              </span>
+            </label>
+            <div class="opt-row">
+              <label class="opt-row-text" for="log-limit">
+                <strong>Entries to keep</strong>
+              </label>
+              <select id="log-limit" data-setting="logLimit" class="opt-select">
+                <option value="200">200</option>
+                <option value="1000">1000</option>
+                <option value="5000">5000</option>
+                <option value="20000">20000</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- Filter lists ------------------------------------------------ -->
+        <section id="section-lists" class="opt-section" role="tabpanel" aria-label="Filter lists" hidden>
+          <div class="opt-card">
+            <div class="opt-card-head">
+              <h2>Subscriptions</h2>
+              <button type="button" id="update-lists">Update now</button>
+            </div>
+            <p class="oab-muted opt-note" id="lists-summary"></p>
+            <div id="list-groups"></div>
+          </div>
+
+          <div class="opt-card">
+            <h2>Add a list by URL</h2>
+            <p class="oab-muted opt-note">
+              Any Adblock Plus compatible list served over https. OpenAdBlock downloads it
+              anonymously, with no cookies and no referrer.
+            </p>
+            <form id="add-list-form" class="opt-inline-form">
+              <label class="oab-visually-hidden" for="add-list-url">Filter list URL</label>
+              <input type="url" id="add-list-url" placeholder="https://example.org/list.txt" required />
+              <button type="submit" class="oab-primary">Add list</button>
+            </form>
+          </div>
+        </section>
+
+        <!-- Allowlist --------------------------------------------------- -->
+        <section id="section-allowlist" class="opt-section" role="tabpanel" aria-label="Allowlist" hidden>
+          <div class="opt-card">
+            <h2>Sites where blocking is off</h2>
+            <p class="oab-muted opt-note">
+              An entry covers the host and all of its subdomains. Prefix it with
+              <code>=</code> to match that exact host only.
+            </p>
+            <form id="add-allow-form" class="opt-inline-form">
+              <label class="oab-visually-hidden" for="add-allow-host">Hostname</label>
+              <input type="text" id="add-allow-host" placeholder="example.com" required />
+              <button type="submit" class="oab-primary">Add site</button>
+            </form>
+            <ul id="allowlist" class="opt-entry-list"></ul>
+          </div>
+        </section>
+
+        <!-- My filters -------------------------------------------------- -->
+        <section id="section-filters" class="opt-section" role="tabpanel" aria-label="My filters" hidden>
+          <div class="opt-card">
+            <h2>Your own filters</h2>
+            <p class="oab-muted opt-note">
+              One filter per line, in Adblock Plus syntax. Lines starting with
+              <code>!</code> are comments. See
+              <a href="https://github.com/drtomtron/OpenAdBlock/blob/main/docs/FILTER_SYNTAX.md" target="_blank" rel="noreferrer">the syntax reference</a>.
+            </p>
+            <label class="oab-visually-hidden" for="custom-filters">Custom filters</label>
+            <textarea id="custom-filters" rows="16" spellcheck="false"
+              placeholder="||ads.example.com^&#10;example.com##.sponsored-block"></textarea>
+            <div id="filter-problems" class="opt-problems" hidden></div>
+            <div class="opt-actions">
+              <button type="button" id="save-filters" class="oab-primary">Save filters</button>
+              <span class="oab-muted" id="filters-status"></span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Activity log ------------------------------------------------ -->
+        <section id="section-log" class="opt-section" role="tabpanel" aria-label="Activity log" hidden>
+          <div class="opt-card">
+            <div class="opt-card-head">
+              <h2>Recent decisions</h2>
+              <div class="opt-actions">
+                <button type="button" id="refresh-log">Refresh</button>
+                <button type="button" id="clear-log" class="oab-danger">Clear</button>
+              </div>
+            </div>
+            <div class="opt-log-controls">
+              <label class="oab-visually-hidden" for="log-action">Show</label>
+              <select id="log-action" class="opt-select">
+                <option value="">Blocked and allowed</option>
+                <option value="block">Blocked only</option>
+                <option value="allow">Allowed by an exception</option>
+              </select>
+              <label class="oab-visually-hidden" for="log-search">Search</label>
+              <input type="text" id="log-search" placeholder="Filter by URL or filter text" />
+            </div>
+            <div class="opt-table-wrap">
+              <table class="opt-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Time</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">Type</th>
+                    <th scope="col">Request</th>
+                    <th scope="col">Filter</th>
+                  </tr>
+                </thead>
+                <tbody id="log-body"></tbody>
+              </table>
+            </div>
+            <p class="oab-muted opt-note" id="log-note"></p>
+          </div>
+        </section>
+
+        <!-- Backup ------------------------------------------------------ -->
+        <section id="section-backup" class="opt-section" role="tabpanel" aria-label="Backup" hidden>
+          <div class="opt-card">
+            <h2>Back up your settings</h2>
+            <p class="oab-muted opt-note">
+              The file holds your preferences, allowlist, own filters and which lists you
+              subscribe to. Filter list contents are not included; they are downloaded again
+              after a restore.
+            </p>
+            <div class="opt-actions">
+              <button type="button" id="export-backup" class="oab-primary">Download backup</button>
+            </div>
+          </div>
+
+          <div class="opt-card">
+            <h2>Restore</h2>
+            <p class="oab-muted opt-note">
+              Restoring replaces your current settings and then re-downloads every list you
+              had subscribed to.
+            </p>
+            <div class="opt-actions">
+              <label class="opt-file-button">
+                <input type="file" id="import-backup" accept="application/json,.json" />
+                <span>Choose a backup file…</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="opt-card">
+            <h2>Statistics</h2>
+            <p id="stats-summary" class="opt-note"></p>
+            <ul id="top-domains" class="opt-entry-list"></ul>
+            <div class="opt-actions">
+              <button type="button" id="reset-stats" class="oab-danger">Reset counters</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- About ------------------------------------------------------- -->
+        <section id="section-about" class="opt-section" role="tabpanel" aria-label="About" hidden>
+          <div class="opt-card">
+            <h2>OpenAdBlock <span id="about-version" class="oab-muted"></span></h2>
+            <p>
+              A free, open-source ad and tracker blocker for Firefox, licensed under the
+              GNU General Public License v3 or later.
+            </p>
+            <ul class="opt-links">
+              <li><a href="https://github.com/drtomtron/OpenAdBlock" target="_blank" rel="noreferrer">Source code and issue tracker</a></li>
+              <li><a href="https://github.com/drtomtron/OpenAdBlock/blob/main/docs/PRIVACY.md" target="_blank" rel="noreferrer">What this extension does and does not collect</a></li>
+              <li><a href="https://github.com/drtomtron/OpenAdBlock/blob/main/docs/FILTER_SYNTAX.md" target="_blank" rel="noreferrer">Supported filter syntax</a></li>
+              <li><a href="https://github.com/drtomtron/OpenAdBlock/blob/main/CONTRIBUTING.md" target="_blank" rel="noreferrer">How to contribute</a></li>
+            </ul>
+          </div>
+
+          <div class="opt-card">
+            <h2>Engine</h2>
+            <dl id="engine-stats" class="opt-stats"></dl>
+          </div>
+
+          <div class="opt-card">
+            <h2>Filter lists</h2>
+            <p class="oab-muted opt-note">
+              OpenAdBlock ships with no filters of its own. It subscribes to lists maintained
+              by third parties, each under its own licence, and downloads them directly from
+              their publishers.
+            </p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="options.js" type="module"></script>
+  </body>
+</html>

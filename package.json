@@ -1,0 +1,32 @@
+{
+  "name": "openadblock",
+  "version": "0.1.0",
+  "description": "OpenAdBlock - a free, open-source ad and tracker blocker for Firefox.",
+  "type": "module",
+  "private": true,
+  "license": "GPL-3.0-or-later",
+  "homepage": "https://github.com/drtomtron/OpenAdBlock",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drtomtron/OpenAdBlock.git"
+  },
+  "bugs": {
+    "url": "https://github.com/drtomtron/OpenAdBlock/issues"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "lint": "node tools/lint.mjs",
+    "build": "node tools/build.mjs",
+    "check": "npm run lint && npm test"
+  },
+  "keywords": [
+    "firefox",
+    "webextension",
+    "adblock",
+    "content-blocker",
+    "privacy"
+  ]
+}

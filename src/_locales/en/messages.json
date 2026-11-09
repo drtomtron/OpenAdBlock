@@ -1,0 +1,10 @@
+{
+  "extensionName": {
+    "message": "OpenAdBlock",
+    "description": "Name of the extension."
+  },
+  "extensionDescription": {
+    "message": "Free and open-source ad, pop-up and tracker blocker. Filter-list based, with per-site allowlisting, element blocking and no telemetry.",
+    "description": "Short description shown in the add-ons manager."
+  }
+}

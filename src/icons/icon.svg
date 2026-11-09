@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="OpenAdBlock">
+  <defs>
+    <linearGradient id="oab-g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3b82f6"/>
+      <stop offset="1" stop-color="#1d4ed8"/>
+    </linearGradient>
+  </defs>
+  <path d="M32 3 7 11v19c0 14.1 10.1 26.3 25 31 14.9-4.7 25-16.9 25-31V11L32 3z" fill="url(#oab-g)"/>
+  <path d="M32 3 7 11v19c0 14.1 10.1 26.3 25 31 14.9-4.7 25-16.9 25-31V11L32 3z" fill="none" stroke="#0f2a66" stroke-width="2"/>
+  <circle cx="32" cy="31" r="14" fill="none" stroke="#fff" stroke-width="5"/>
+  <line x1="22" y1="41" x2="42" y2="21" stroke="#fff" stroke-width="5" stroke-linecap="round"/>
+</svg>

@@ -1,0 +1,41 @@
+name: Feature request
+description: Suggest something OpenAdBlock should do
+labels: ['enhancement']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please check [docs/ROADMAP.md](https://github.com/drtomtron/OpenAdBlock/blob/main/docs/ROADMAP.md)
+        first — it lists what is planned, and what has been considered and declined
+        (telemetry, account sync, an allowlisting programme).
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve
+      description: Describe the situation you run into, not just the feature you have in mind.
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: What you would like it to do
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Anything you have tried instead
+      description: Custom filters, another list, a different setting.
+
+  - type: checkboxes
+    id: constraints
+    attributes:
+      label: Fits the project's constraints
+      description: Requests that break these are unlikely to be accepted.
+      options:
+        - label: It needs no runtime dependencies
+        - label: It sends nothing to any server
+        - label: It does not need an account

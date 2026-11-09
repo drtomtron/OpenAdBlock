@@ -1,0 +1,82 @@
+name: Bug report
+description: Something in the extension itself behaves incorrectly
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Before filing: if an **ad gets through** or a **site is broken by a filter**, that is
+        usually a filter list issue, and reporting it upstream fixes it for every blocker at
+        once. See the links in the blank issue chooser.
+
+        Use this form for problems with OpenAdBlock's own behaviour.
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Enable only EasyList, remove custom filters
+        2. Open https://example.com
+        3. ...
+    validations:
+      required: true
+
+  - type: input
+    id: firefox
+    attributes:
+      label: Firefox version
+      placeholder: '134.0 on Windows 11'
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: OpenAdBlock version
+      description: Shown under Settings, About.
+      placeholder: '0.1.0'
+    validations:
+      required: true
+
+  - type: textarea
+    id: lists
+    attributes:
+      label: Which filter lists are enabled
+      description: Settings, Filter lists. Mention any list you added by URL.
+    validations:
+      required: true
+
+  - type: textarea
+    id: log
+    attributes:
+      label: Relevant lines from the activity log
+      description: >
+        Settings, Activity log. Paste the rows for the request involved, including the
+        filter column. Remove anything you would rather not share.
+      render: text
+
+  - type: textarea
+    id: console
+    attributes:
+      label: Errors from the background page
+      description: >
+        about:debugging, This Firefox, Inspect on OpenAdBlock, Console tab.
+      render: text
+
+  - type: checkboxes
+    id: narrowing
+    attributes:
+      label: Narrowing it down
+      options:
+        - label: It still happens with only EasyList enabled and no custom filters
+        - label: It still happens in a fresh Firefox profile
+        - label: Blocking is on for the site (the popup switch is on, nothing is paused)
