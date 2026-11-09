@@ -165,6 +165,14 @@ describe('parseFilter: element hiding', () => {
     const filter = parseFilter('||example.com/track?id=1#frag');
     assert.equal(filter.kind, 'network');
   });
+
+  it('accepts the any-public-suffix domain form used throughout EasyList', () => {
+    // Real EasyList line: a wildcard TLD plus a selector containing spaces.
+    const filter = parseFilter('tellows-au.com,tellows.*##li > .comment-body[style*="min-height: 250px;"]');
+    assert.equal(filter.kind, 'cosmetic');
+    assert.deepEqual(filter.includeDomains, ['tellows-au.com', 'tellows.*']);
+    assert.equal(filter.selector, 'li > .comment-body[style*="min-height: 250px;"]');
+  });
 });
 
 describe('patternToRegexSource', () => {

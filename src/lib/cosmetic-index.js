@@ -32,6 +32,15 @@ export class CosmeticIndex {
     this.globalExceptions = new Set();
     /** @type {Map<string, Set<string>>} generic selectors disabled on a domain */
     this.genericExclusions = new Map();
+    /**
+     * Rules whose domain uses the any-public-suffix form (`example.*`). They
+     * cannot be filed under a hostname key, so they are matched by scanning.
+     * Filter lists hold only a few hundred of these, and lookups are cached.
+     * @type {{rules: Array<{domain: string, entry: object}>,
+     *         exceptions: Array<{domain: string, selector: string}>,
+     *         genericExclusions: Array<{domain: string, selector: string}>}}
+     */
+    this.wildcard = { rules: [], exceptions: [], genericExclusions: [] };
     this.counts = { generic: 0, specific: 0, exceptions: 0, procedural: 0 };
   }
 
@@ -52,7 +61,11 @@ export class CosmeticIndex {
           index.globalExceptions.add(filter.selector);
         } else {
           for (const domain of filter.includeDomains) {
-            addToSetMap(index.exceptions, domain, filter.selector);
+            if (domain.includes('*')) {
+              index.wildcard.exceptions.push({ domain, selector: filter.selector });
+            } else {
+              addToSetMap(index.exceptions, domain, filter.selector);
+            }
           }
         }
         continue;
@@ -68,7 +81,11 @@ export class CosmeticIndex {
           index.counts.generic++;
         }
         for (const domain of filter.excludeDomains) {
-          addToSetMap(index.genericExclusions, domain, filter.selector);
+          if (domain.includes('*')) {
+            index.wildcard.genericExclusions.push({ domain, selector: filter.selector });
+          } else {
+            addToSetMap(index.genericExclusions, domain, filter.selector);
+          }
         }
         continue;
       }
@@ -79,9 +96,12 @@ export class CosmeticIndex {
           procedural: filter.isProcedural,
           exclude: filter.excludeDomains
         };
-        const list = index.specific.get(domain);
-        if (list) list.push(entry);
-        else index.specific.set(domain, [entry]);
+        if (domain.includes('*')) index.wildcard.rules.push({ domain, entry });
+        else {
+          const list = index.specific.get(domain);
+          if (list) list.push(entry);
+          else index.specific.set(domain, [entry]);
+        }
         index.counts.specific++;
       }
     }
@@ -110,21 +130,29 @@ export class CosmeticIndex {
       const set = this.exceptions.get(suffix);
       if (set) for (const selector of set) excluded.add(selector);
     }
+    for (const item of this.wildcard.exceptions) {
+      if (hostMatchesDomain(hostname, item.domain)) excluded.add(item.selector);
+    }
 
     const seen = new Set();
+    const take = (entry) => {
+      if (seen.has(entry.selector)) return;
+      if (excluded.has(entry.selector)) return;
+      if (entry.exclude.length > 0 && entry.exclude.some((d) => hostMatchesDomain(hostname, d))) {
+        return;
+      }
+      seen.add(entry.selector);
+      if (entry.procedural) result.procedural.push(entry.selector);
+      else result.plain.push(entry.selector);
+    };
+
     for (const suffix of suffixes) {
       const entries = this.specific.get(suffix);
       if (entries === undefined) continue;
-      for (const entry of entries) {
-        if (seen.has(entry.selector)) continue;
-        if (excluded.has(entry.selector)) continue;
-        if (entry.exclude.length > 0 && entry.exclude.some((d) => hostMatchesDomain(hostname, d))) {
-          continue;
-        }
-        seen.add(entry.selector);
-        if (entry.procedural) result.procedural.push(entry.selector);
-        else result.plain.push(entry.selector);
-      }
+      for (const entry of entries) take(entry);
+    }
+    for (const item of this.wildcard.rules) {
+      if (hostMatchesDomain(hostname, item.domain)) take(item.entry);
     }
 
     if (options.genericHide !== true) {
@@ -132,6 +160,9 @@ export class CosmeticIndex {
       for (const suffix of suffixes) {
         const set = this.genericExclusions.get(suffix);
         if (set) for (const selector of set) genericOff.add(selector);
+      }
+      for (const item of this.wildcard.genericExclusions) {
+        if (hostMatchesDomain(hostname, item.domain)) genericOff.add(item.selector);
       }
       if (genericOff.size === 0 && excluded.size === 0) {
         result.generic = this.generic;
@@ -152,10 +183,16 @@ export class CosmeticIndex {
    * @returns {boolean}
    */
   usesDefaultGeneric(host) {
-    const suffixes = hostSuffixes(normalizeHost(host));
+    const hostname = normalizeHost(host);
     if (this.globalExceptions.size > 0) return false;
-    for (const suffix of suffixes) {
+    for (const suffix of hostSuffixes(hostname)) {
       if (this.exceptions.has(suffix) || this.genericExclusions.has(suffix)) return false;
+    }
+    for (const item of this.wildcard.exceptions) {
+      if (hostMatchesDomain(hostname, item.domain)) return false;
+    }
+    for (const item of this.wildcard.genericExclusions) {
+      if (hostMatchesDomain(hostname, item.domain)) return false;
     }
     return true;
   }

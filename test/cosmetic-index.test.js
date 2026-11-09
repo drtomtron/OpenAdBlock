@@ -80,6 +80,14 @@ describe('CosmeticIndex', () => {
     assert.equal(index.usesDefaultGeneric('example.com'), false);
   });
 
+  it('applies a wildcard TLD rule across every country domain', () => {
+    const wildcard = indexFrom(['shop.*##.country-ad', 'shop.*,~shop.ru##.promo']);
+    assert.deepEqual(wildcard.getForHost('shop.com').plain, ['.country-ad', '.promo']);
+    assert.deepEqual(wildcard.getForHost('www.shop.co.uk').plain, ['.country-ad', '.promo']);
+    assert.deepEqual(wildcard.getForHost('shop.ru').plain, ['.country-ad']);
+    assert.deepEqual(wildcard.getForHost('othershop.com').plain, []);
+  });
+
   it('counts what it stored', () => {
     assert.equal(index.counts.generic, 2);
     assert.equal(index.counts.procedural, 1);

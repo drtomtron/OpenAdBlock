@@ -424,8 +424,11 @@ export function parseFilter(raw) {
   const cosmetic = findCosmeticSeparator(body);
   if (cosmetic) {
     const prefix = body.slice(0, cosmetic.index);
-    // Guard against network filters that merely contain a '#'.
-    if (!/[/?=&$*]/.test(prefix)) {
+    // Guard against network filters that merely contain a '#'. A '*' is
+    // allowed here because `example.*##.ad` is the any-public-suffix form,
+    // which lists use heavily; the other characters never appear in a domain
+    // list but do appear in URLs.
+    if (!/[/?=&$]/.test(prefix)) {
       const selector = body.slice(cosmetic.index + cosmetic.separator.length);
       return buildCosmeticFilter(raw, prefix, cosmetic.separator, selector);
     }

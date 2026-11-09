@@ -77,6 +77,21 @@ describe('hostMatchesDomain', () => {
     assert.equal(hostMatchesDomain('notexample.com', 'example.com'), false);
     assert.equal(hostMatchesDomain('example.com.evil.test', 'example.com'), false);
   });
+
+  it('treats a trailing .* as any public suffix', () => {
+    assert.equal(hostMatchesDomain('example.com', 'example.*'), true);
+    assert.equal(hostMatchesDomain('example.de', 'example.*'), true);
+    assert.equal(hostMatchesDomain('example.co.uk', 'example.*'), true);
+    assert.equal(hostMatchesDomain('www.example.co.uk', 'example.*'), true);
+  });
+
+  it('does not let a .* wildcard match an attacker controlled label', () => {
+    // The wildcard may only stand in for the public suffix.
+    assert.equal(hostMatchesDomain('example.com.attacker.test', 'example.*'), false);
+    assert.equal(hostMatchesDomain('evil.example.attacker.test', 'example.*'), false);
+    assert.equal(hostMatchesDomain('notexample.com', 'example.*'), false);
+    assert.equal(hostMatchesDomain('example.com', '.*'), false);
+  });
 });
 
 describe('hostSuffixes', () => {

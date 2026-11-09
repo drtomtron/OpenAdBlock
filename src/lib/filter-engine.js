@@ -268,6 +268,12 @@ export class FilterEngine {
     const hosts = filter.includeDomains.length > 0
       ? filter.includeDomains
       : hostsFromPattern(filter.pattern);
+    // A wildcard domain cannot be filed under a hostname key, so it goes in
+    // the always-checked list where domainApplies can match it properly.
+    if (hosts.some((host) => host.includes('*'))) {
+      this.globalDocumentExceptions.push(filter);
+      return;
+    }
     if (hosts.length === 0) {
       this.globalDocumentExceptions.push(filter);
       return;

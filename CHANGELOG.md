@@ -6,7 +6,20 @@ All notable changes to OpenAdBlock are recorded here. The format follows
 
 ## [Unreleased]
 
-Nothing yet. See [docs/ROADMAP.md](docs/ROADMAP.md) for what is planned.
+### Fixed
+
+- Element hiding rules written for the any-public-suffix domain form
+  (`example.*##.ad`) were rejected at parse time and never applied. The domain
+  prefix is now allowed to contain `*`, and `hostMatchesDomain` understands the
+  wildcard, so `example.*` matches `example.com`, `example.de` and
+  `www.example.co.uk`. The wildcard may only stand in for a public suffix, so
+  `example.com.attacker.test` still does not match. This recovers 382 hiding
+  rules from EasyList alone, for sites such as Softonic, TripAdvisor and
+  CrazyGames, and drops the EasyList rejection rate from 0.12% to 0.02%.
+- Wildcard domains are now indexed separately in `CosmeticIndex` and in the
+  document exception index, since they cannot be filed under a hostname key.
+
+See [docs/ROADMAP.md](docs/ROADMAP.md) for what is planned.
 
 ## [0.1.0] - 2026-11-09
 

@@ -136,6 +136,11 @@ export function isThirdParty(host, documentHost) {
 /**
  * Domain-option matching: `example.com` matches `example.com` and all of its
  * subdomains, as in Adblock Plus filter syntax.
+ *
+ * A trailing `.*` is the "any public suffix" form that filter lists use for
+ * sites running on many country domains: `example.*` matches `example.com`,
+ * `example.co.uk` and `www.example.de`, but not `example.com.attacker.test`.
+ *
  * @param {string} host
  * @param {string} domain
  * @returns {boolean}
@@ -144,6 +149,17 @@ export function hostMatchesDomain(host, domain) {
   const h = normalizeHost(host);
   const d = normalizeHost(domain);
   if (h === '' || d === '') return false;
+
+  if (d.endsWith('.*')) {
+    const stem = d.slice(0, -2);
+    if (stem === '' || stem.includes('*')) return false;
+    // Compare against the registrable domain so that the wildcard can only
+    // stand for a public suffix, never for an attacker controlled label.
+    const base = baseDomain(h);
+    if (base.split('.')[0] !== stem) return false;
+    return h === base || h.endsWith('.' + base);
+  }
+
   if (h === d) return true;
   return h.endsWith('.' + d);
 }
